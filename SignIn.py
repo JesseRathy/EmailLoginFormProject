@@ -1,12 +1,12 @@
 import AccountCreation as Acc
-
-autoCancel = 4
-accounts = []
-
+import os.path as path
+auto_cancel = 4
+account_dict = {}
+account_dict['Users'] = []
 
 def sign_in(actualUser,actualPass):
-    global autoCancel
-    while (autoCancel > 0):
+    global auto_cancel
+    while (auto_cancel > 0):
         print("What is your Username?")
         givenUser = input()
         print("What is your Password?")
@@ -30,16 +30,17 @@ def validation(UAct,UGiven,PAct,PGiven):
     else:
         return False
 
-actualUser = "Test123"
-actualPass = "Password123"
-
-#if
-accounts = Acc.CreateAccount(accounts)
+if path.isfile('test.json'):
+    account_dict = Acc.LoadAcccountFile('test')
+#account_dict = Acc.CreateAccount(account_dict)
 #accounts = Acc.CreateAccount(accounts)
-Acc.SaveAccountFile(accounts,"test")
-loadedList = Acc.LoadAcccountFile('test')
-for item in loadedList:
-    print(item)
+Acc.SaveAccountFile(account_dict,"test")
+account_dict = Acc.LoadAcccountFile('test')
+#HOW TO LOOK FOR SPECIFIC EMAILS
+for key,val in account_dict.items():
+       for i in val:
+           print(i["Email"])
+           #do whatever else you need I guess
 
     ##TODO:
     ## Change this Tuple mess into a 2-dictionary system:

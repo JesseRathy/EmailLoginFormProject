@@ -1,16 +1,11 @@
 import re as Regex
 import json as JSON
+import os.path as path
 
 
-# hasUppercase = False
-# hasNumber = False
-# isValidEmail = False
-# use the email regex for emails
-# emailRegex = '^[\w.+-]+@[\w-]+.[\w-.]+$'
 
 
 # first we're gonna create the general account creation
-# then we're gonna figure out where the list SHOULD go
 # then we're gonna grab accounts to check them out and make sure we don't have dupes
 
 
@@ -18,9 +13,9 @@ import json as JSON
 # Note again: Might be a good idea to handle the whole Regex check in another function? this function should probably just CREATE accounts, not create and check them. Maybe function for input/output groups too.
 # desc: CreateAccount Allows the user to create an 'account' consisting of a Tuple of email, username and password. Note that this only accepts reasonable email addresses (can change to actually send a request later maybe?)
 # and a password of any length with at least one numeral and one uppercase letter (should probably have a min size as well)
-# pre: list to use exists, which requires an 'accounts' file to either exist or be created on startup.
-# post: New account is added to the list of accounts to be saved to 'accounts' file.
-def CreateAccount(account_list):
+# pre: dictionary to store in exists, which requires an 'accounts' file to either exist or be created on startup (usually by just creating a blank dictionary)
+# post: New dictionary of a single account is added to the dictionary of accounts to be saved an 'accounts' file.
+def CreateAccount(account_dict):
     valid_pass = False
     valid_email = False
     valid_name = False
@@ -38,11 +33,25 @@ def CreateAccount(account_list):
             print("Input your desired password: ")
             possible_pass = input()
             valid_pass = ValidatePass(possible_pass)
-    if email_to_check not in account_list and possible_name not in account_list:
-        my_tuple = tuple((email_to_check, possible_name, possible_pass))
+    if email_to_check not in account_dict and possible_name not in account_dict:
+        user_dict = AccountToDictionary(account_dict,email_to_check,possible_name,possible_pass)
+        #account_dict[email_to_check] = user_dict
+        #my_tuple = tuple((email_to_check, possible_name, possible_pass))
         #print(my_tuple)
-        account_list.append(my_tuple)
-        return account_list
+        #account_dict.append(my_tuple)
+        return account_dict
+# AccountToDictionary
+# Description: Takes an account created (usually by CreateAccount, but can be done by other things as well and converts it to a dictionary where the primary key is the e-mail account
+# and the secondary keys are the name and password of the users.
+# pre: email, name and password have all been created
+def AccountToDictionary(account_dict,email,name,pw):
+
+    account_dict['Users'].append({
+        'Email' : email,
+        'Name' : name,
+        'Password': pw
+    })
+    return account_dict
 
 # Helper functions for validation in account creation (b/c I'm tired of looking at this disasterpiece)
 def ValidateEmail(email_to_check):
@@ -87,9 +96,15 @@ def ValidatePass(possible_pass):
 # pre: list is not null and exists, file given by 'file_name' must also exist
 # post: current state of the list of accounts is saved to the file with the name given by file_name.
 def SaveAccountFile(account_list,file_name):
-    with open(file_name+'.txt','a+') as output_file:
-        JSON.dump(account_list,output_file)
-        output_file.close()
+    if path.isfile(file_name+'.json'):
+        LoadAcccountFile(file_name)
+        with open(file_name+'.json','w') as output_file:
+            JSON.dump(account_list,output_file)
+            output_file.close()
+    else:
+        with open(file_name+'.json','w') as output_file:
+            JSON.dump(account_list,output_file)
+            output_file.close()
 
 
 # Note to self: This is probably not the best implementation; not really worried about that for the concerns of just kinda seeing how a system like this works in action, though.
@@ -98,7 +113,7 @@ def SaveAccountFile(account_list,file_name):
 # pre: file given by 'file_name' must exist
 # post: file given by 'file_name' read into a list, giving us a list to work with, add items to and save when we are finished.
 def LoadAcccountFile(file_name):
-    with open(file_name+'.txt','r+') as json_file:
+    with open(file_name+'.json','r+') as json_file:
         account = JSON.load(json_file)
         json_file.close()
         return account
