@@ -41,6 +41,15 @@ loadedList = Acc.LoadAcccountFile('test')
 for item in loadedList:
     print(item)
 
+    ##TODO:
+    ## Change this Tuple mess into a 2-dictionary system:
+    ## One large dictionary made up of smaller dictionaries, where each new dictionary's
+    ## key is the email associated with the account; then have username and password fields
+    ## in each dictionary. The account creation function can take care of this, or you can make another
+    ## function to turn this stuff into dictionaries and insert it (probably a little more work but better in the end)
+    ## Your choice.
+
+
 
 
 
