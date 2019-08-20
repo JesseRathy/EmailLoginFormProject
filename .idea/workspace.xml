@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2bdaea24-ee0f-4f79-96a9-090824480110" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AccountCreation.py" beforeDir="false" afterPath="$PROJECT_DIR$/AccountCreation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SignIn.py" beforeDir="false" afterPath="$PROJECT_DIR$/SignIn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

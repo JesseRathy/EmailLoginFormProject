@@ -4,34 +4,39 @@ auto_cancel = 4
 account_dict = {}
 account_dict['Users'] = []
 
-def sign_in(actualUser,actualPass):
+def sign_in(acc_dict):
     global auto_cancel
     while (auto_cancel > 0):
         print("What is your Username?")
         givenUser = input()
         print("What is your Password?")
         givenPass = input()
-        if (validation(actualUser,givenUser,
-            actualPass,givenPass) == True):
+       # for key,val in acc_dict
+        if (validation(acc_dict,givenUser,
+            givenPass) == True):
             #We'll just echo A true or false thing here
             print("Welcome to the Program!")
             return
         else:
             print("Please Try again!")
-            autoCancel  = autoCancel - 1
+            auto_cancel = auto_cancel - 1
 
 # this makes it easy to change validation if you want; don't have to go
 # into the sign_in code to do it, just change this piece of the code
 # This makes it easy to change it across all sign-ins if you use the validation
 # to validate
-def validation(UAct,UGiven,PAct,PGiven):
-    if (UAct == UGiven and PAct == PGiven):
-        return True
+def validation(Users,UGiven,PGiven):
+    for key,val in Users.items():
+        for i in val:
+            if i["Name"] == UGiven and i["Password"] == PGiven:
+    #if (UAct == UGiven and PAct == PGiven):
+                return True
     else:
         return False
 
 if path.isfile('test.json'):
     account_dict = Acc.LoadAcccountFile('test')
+sign_in(account_dict)
 #account_dict = Acc.CreateAccount(account_dict)
 #accounts = Acc.CreateAccount(accounts)
 Acc.SaveAccountFile(account_dict,"test")
