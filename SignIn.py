@@ -1,9 +1,30 @@
 import AccountCreation as Acc
 import os.path as path
-import pymongo as pymng
+from pymongo import MongoClient
 auto_cancel = 4
 account_dict = {}
 account_dict['Users'] = []
+
+
+#Explicit MongoDB URI call to localhost; can change this to a server if you want.
+client = MongoClient('mongodb://localhost:27017')
+
+#access the specific DB you want to use:
+db = client['LoginDBTest']
+
+
+def MongoDBTest(database):
+    users = database.Users
+    user_data = {
+        'email': 'Test@test.com',
+        'username': 'Test',
+        'password': 'P455w0rD'
+    }
+    result = users.insert_one(user_data)
+    print('One post: {0}'.format(result.inserted_id))
+
+
+
 
 def sign_in(acc_dict):
     global auto_cancel
@@ -35,17 +56,19 @@ def validation(Users,UGiven,PGiven):
     else:
         return False
 
-if path.isfile('test.json'):
-    account_dict = Acc.LoadAcccountFile('test')
-sign_in(account_dict)
+MongoDBTest(db)
+
+#if path.isfile('test.json'):
+#    account_dict = Acc.LoadAcccountFile('test')
+#sign_in(account_dict)
 #account_dict = Acc.CreateAccount(account_dict)
 #accounts = Acc.CreateAccount(accounts)
-Acc.SaveAccountFile(account_dict,"test")
-account_dict = Acc.LoadAcccountFile('test')
+#Acc.SaveAccountFile(account_dict,"test")
+#account_dict = Acc.LoadAcccountFile('test')
 #HOW TO LOOK FOR SPECIFIC EMAILS
-for key,val in account_dict.items():
-       for i in val:
-           print(i["Email"])
+#for key,val in account_dict.items():
+#       for i in val:
+#           print(i["Email"])
            #do whatever else you need I guess
 
     ##TODO:
