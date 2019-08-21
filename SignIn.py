@@ -1,10 +1,14 @@
 import AccountCreation as Acc
 import os.path as path
 from pymongo import MongoClient
+from mongoengine import *
+
+import datetime
 auto_cancel = 4
 account_dict = {}
 account_dict['Users'] = []
 
+connect('LoginDBTest',host='localhost',port=27017)
 
 #Explicit MongoDB URI call to localhost; can change this to a server if you want.
 client = MongoClient('mongodb://localhost:27017')
@@ -12,8 +16,13 @@ client = MongoClient('mongodb://localhost:27017')
 #access the specific DB you want to use:
 db = client['LoginDBTest']
 
+class _Users(Document):
+    email = StringField(unique=True,required=True,max_length=200)
+    username = StringField(unique=True,required=True,max_length=50)
+    password = StringField(required=True,max_length=50)
+    created = DateTimeField(default=datetime.datetime.now)
 
-def MongoDBTest(database):
+def mongoDBTest(database):
     users = database.Users
     user_data = {
         'email': 'Test@test.com',
@@ -22,6 +31,15 @@ def MongoDBTest(database):
     }
     result = users.insert_one(user_data)
     print('One post: {0}'.format(result.inserted_id))
+
+def MongoEngineTest():
+    User_test = _Users(
+        email='Pizza1@gmail.com',
+        username='Pizza1',
+        password='F1FTy0n3'
+    )
+    User_test.save()
+    print(User_test.email)
 
 
 
@@ -56,8 +74,8 @@ def validation(Users,UGiven,PGiven):
     else:
         return False
 
-MongoDBTest(db)
-
+#MongoDBTest(db)
+MongoEngineTest()
 #if path.isfile('test.json'):
 #    account_dict = Acc.LoadAcccountFile('test')
 #sign_in(account_dict)

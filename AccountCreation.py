@@ -53,6 +53,8 @@ def AccountToDictionary(account_dict,email,name,pw):
     })
     return account_dict
 
+#def AccountTo
+
 # Helper functions for validation in account creation (b/c I'm tired of looking at this disasterpiece)
 def ValidateEmail(email_to_check):
     valid_email = False
