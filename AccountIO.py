@@ -13,7 +13,7 @@ def GrabAllDBDocuments():
     return all_users
 
 def GrabUserDBDocumment(email):
-    our_user = Schema.Users.objects.find(email=email)
+    our_user = Schema.Users.objects(email=email)
     return our_user
 
 def DeleteUser(email):
