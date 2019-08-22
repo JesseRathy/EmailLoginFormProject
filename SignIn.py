@@ -40,7 +40,14 @@ def validation(Users,UGiven,PGiven):
 
 #MongoDBTest(db)
 db_connect.mongoengine_connect()
-db_connect.mongoengine_db_test()
+#Test_User = Acc.CreateAccount()
+#AccIO.SaveDataBaseDocument(Test_User)
+users = AccIO.GrabAllDBDocuments()
+for i in users:
+    print(i.email + ", " + i.username)
+AccIO.ChangeUserName("deathgripz@gmail.com")
+AccIO.DeleteUser("Jesse@mail.org")
+#db_connect.mongoengine_db_test()
 #if path.isfile('test.json'):
 #    account_dict = Acc.LoadAcccountFile('test')
 #sign_in(account_dict)
