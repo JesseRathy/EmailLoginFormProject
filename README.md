@@ -9,3 +9,5 @@ The overall goal of the project is a couple main things:
 4. Try and do some security stuff with how passwords are stored; Right now they're stored in plain-text, which is definitely a no-go; it'd be interesting to learn some basic security techniques and how to manage those!
 
 Note that this was created in Pycharm and so might be best to open in Pycharm.
+
+MongoEngine and PyMongo are both required  to run this software; Pycharm allows you to install libraries easily through the console and is what this was created on, so it's best to use that if possible
